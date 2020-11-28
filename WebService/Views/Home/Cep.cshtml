@@ -1,0 +1,46 @@
+﻿
+@{ ViewData["Title"] = "Cep"; }
+
+<form asp-action="Cadastrar" asp-controller="Home">
+    <fieldset>
+        <legend>Consultar CEP</legend>
+        <div class="form-group">
+            <label>CEP</label>
+            <input class="form-control" type="text" id="cep" />
+        </div>
+        <div class="form-group">
+            <button type="button" onclick="BuscarCep()" class="btn btn-info"> Buscar </button>
+        </div>
+        <div class="form-group">
+            <label>Rua</label>
+            <input class="form-control" type="text" id="rua" />
+        </div>
+        <div class="form-group">
+            <label>Cidade</label>
+            <input class="form-control" type="text" id="cidade" />
+        </div>
+        <div class="form-group">
+            <input class="btn btn-success" type="submit" value="Cadastrar" />
+        </div>
+    </fieldset>
+</form>
+
+<script>
+
+    var txtCep = document.getElementById("cep");
+    var txtRua = document.getElementById("rua");
+    var txtCidade = document.getElementById("cidade");
+
+    function BuscarCep() {
+        let cep = txtCep.value;
+        let url = `https://viacep.com.br/ws/${cep}/json/`;
+        fetch(url)
+            .then(result => result.json())
+            .then(json => {
+                txtRua.value = json.logradouro;
+                txtCidade.value = json.localidade;
+            })
+            .catch(error => console.log(error));
+    };
+
+</script>
